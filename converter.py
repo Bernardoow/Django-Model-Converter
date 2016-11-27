@@ -13,7 +13,7 @@ class BaseConvertCommand(sublime_plugin.TextCommand):
     def check_pattern(self, string, pattern):
         matchObj = re.match(pattern, string)
         if matchObj:
-            return matchObj.group(1).strip() + ', '
+            return "'" + matchObj.group(1).strip() + "', "
         return ''
 
     def findClassAndFields(self, view, edit, BASE_RETURN):
