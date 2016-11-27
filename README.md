@@ -10,4 +10,4 @@
 
 ###Demonstration
 
-![alt text](www.GIFCreator.me_ewf5EX "Django-Model-Converter")
+![alt text](images/www.GIFCreator.me_ewf5EX "Django-Model-Converter")
