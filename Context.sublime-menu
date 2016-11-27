@@ -1,0 +1,10 @@
+[
+    {
+        "caption": "Django Model Convert",
+        "children":
+            [
+                {"command": "convert_to_model_form", "caption": "To ModelForm"},
+                {"command": "convert_to_serializer", "caption": "To Serializer"}
+            ]
+    },
+]
