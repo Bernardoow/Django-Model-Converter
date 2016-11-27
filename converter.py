@@ -5,7 +5,7 @@ import re
 class BaseConvertCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
-        self.findClassAndFields(self.view, edit, self.BASE_RETURN)
+        self.find_class_and_fields(self.view, edit)
 
     def is_enabled(self):
         return True
@@ -16,7 +16,7 @@ class BaseConvertCommand(sublime_plugin.TextCommand):
             return "'" + matchObj.group(1).strip() + "', "
         return ''
 
-    def findClassAndFields(self, view, edit, BASE_RETURN):
+    def find_class_and_fields(self, view, edit):
         pattern = re.compile(r"(.*)=(.*)(models.)(.*)(Field)(.*)\)$")
         pattern_class_name = re.compile(r"class(.*)\((.*):$")
         result = "("
@@ -28,10 +28,10 @@ class BaseConvertCommand(sublime_plugin.TextCommand):
                     if index == 0:
                         class_name = self.check_pattern(string,
                                                         pattern_class_name)\
-                            .replace(', ', '')
+                            .replace(', ', '').replace("'", "")
                     result += self.check_pattern(string, pattern)
                 result += ')'
-                view.insert(edit, region.end(), BASE_RETURN.format(
+                view.insert(edit, region.end(), self.BASE_RETURN.format(
                     class_name, result))
 
 
