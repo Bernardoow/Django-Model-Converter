@@ -38,18 +38,18 @@ class BaseConvertCommand(sublime_plugin.TextCommand):
 class ConvertToSerializer(BaseConvertCommand):
     BASE_RETURN = """
 
-class {}Serializer(serializers.ModelSerializer):
+class {0}Serializer(serializers.ModelSerializer):
     class Meta:
-        model = Account
-        fields = {}
+        model = {0}
+        fields = {1}
     """
 
 
 class ConvertToModelForm(BaseConvertCommand):
     BASE_RETURN = """
 
-class {}Form(ModelForm):
+class {0}Form(ModelForm):
     class Meta:
-        model = Account
-        fields = {}
+        model = {0}
+        fields = {1}
     """
