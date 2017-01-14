@@ -19,7 +19,7 @@ class BaseConvertCommand(sublime_plugin.TextCommand):
     def find_class_and_fields(self, view, edit):
         pattern = re.compile(r"(.*)=(.*)(models.)(.*)(Field)(.*)\)$")
         pattern_class_name = re.compile(r"class(.*)\((.*):$")
-        result = "("
+        result = ""
         class_name = ''
         for region in view.sel():
             if not region.empty():
@@ -30,7 +30,6 @@ class BaseConvertCommand(sublime_plugin.TextCommand):
                                                         pattern_class_name)\
                             .replace(', ', '').replace("'", "")
                     result += self.check_pattern(string, pattern)
-                result += ')'
                 view.insert(edit, region.end(), self.BASE_RETURN.format(
                     class_name, result))
 
@@ -41,7 +40,7 @@ class ConvertToSerializer(BaseConvertCommand):
 class {0}Serializer(serializers.ModelSerializer):
     class Meta:
         model = {0}
-        fields = {1}
+        fields = ({1})
     """
 
 
@@ -51,5 +50,15 @@ class ConvertToModelForm(BaseConvertCommand):
 class {0}Form(ModelForm):
     class Meta:
         model = {0}
-        fields = {1}
+        fields = ({1})
+    """
+
+
+class ConvertToFilter(BaseConvertCommand):
+    BASE_RETURN = """
+
+class {0}Filter(django_filters.rest_framework.FilterSet):
+    class Meta:
+        model = {0}
+        fields = [{1}]
     """
