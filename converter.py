@@ -13,11 +13,16 @@ import re
 
 class BaseConvertCommand(sublime_plugin.TextCommand):
     pattern_file = re.compile(r"(.*).py$")
+    TO_CLIPBOARD = False
 
     def run(self, edit):
+        print(dir(self.view))
+        print(dir(edit))
         self.find_class_and_fields(self.view, edit)
 
     def is_enabled(self):
+        print(dir(sublime))
+
         return self.view.file_name() is None \
             or re.search(self.pattern_file, self.view.file_name() or "") is not None
 
@@ -46,8 +51,16 @@ class BaseConvertCommand(sublime_plugin.TextCommand):
                             .replace(', ', '').replace("'", "")
                     result += self.check_pattern(string, [pattern, pattern_fk,
                                                  pattern_m2m, pattern_o2o])
-                view.insert(edit, region.end(), self.BASE_RETURN.format(
-                    class_name, result))
+                if self.TO_CLIPBOARD:
+                    sublime.set_clipboard(self.BASE_RETURN.format(
+                        class_name, result))
+                else:
+                    view.insert(edit, region.end(), self.BASE_RETURN.format(
+                        class_name, result))
+
+
+class BaseConvertToClipboardCommand(BaseConvertCommand):
+    TO_CLIPBOARD = True
 
 
 class ConvertToSerializer(BaseConvertCommand):
@@ -78,3 +91,15 @@ class {0}Filter(django_filters.rest_framework.FilterSet):
         model = {0}
         fields = [{1}]
     """
+
+
+class ConvertToSerializerClipboard(ConvertToSerializer, BaseConvertToClipboardCommand):
+    pass
+
+
+class ConvertToModelFormClipboard(ConvertToModelForm, BaseConvertToClipboardCommand):
+    pass
+
+
+class ConvertToFilterClipboard(ConvertToFilter, BaseConvertToClipboardCommand):
+    pass
