@@ -12,12 +12,14 @@ import re
 
 
 class BaseConvertCommand(sublime_plugin.TextCommand):
+    pattern_file = re.compile(r"(.*).py$")
 
     def run(self, edit):
         self.find_class_and_fields(self.view, edit)
 
     def is_enabled(self):
-        return True
+        return self.view.file_name() is None \
+            or re.search(self.pattern_file, self.view.file_name() or "") is not None
 
     def check_pattern(self, string, patterns):
         for pattern in patterns:
