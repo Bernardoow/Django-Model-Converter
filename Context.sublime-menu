@@ -4,7 +4,11 @@
         "children":
             [
                 {"command": "convert_to_model_form", "caption": "To ModelForm"},
-                {"command": "convert_to_serializer", "caption": "To Serializer"}
+                {"command": "convert_to_model_form_clipboard", "caption": "To ModelForm (Clipboard)"},
+                {"command": "convert_to_serializer", "caption": "To Serializer"},
+                {"command": "convert_to_serializer_clipboard", "caption": "To Serializer (Clipboard)"},
+                {"command": "convert_to_filter", "caption": "To Filter"},
+                {"command": "convert_to_filter_clipboard", "caption": "To Filter (Clipboard)"}
             ]
     },
 ]
