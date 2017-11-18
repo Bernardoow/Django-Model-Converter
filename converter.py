@@ -10,7 +10,7 @@ __email__ = "bgomesdeabreu@gmail.com"
 import sublime, sublime_plugin
 import re
 
-from src.converter import Converter
+from .src.converter import Converter
 
 
 class BaseConvertCommand(sublime_plugin.TextCommand):
